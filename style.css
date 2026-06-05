@@ -232,18 +232,20 @@ h1 {
     inset: 0;
     width: 100vw;
     height: 100svh;
-    object-fit: contain;
-    object-position: center top;
+    object-fit: cover;
+    object-position: 52% center;
     opacity: 1;
     z-index: 0;
   }
+}
 
   .container {
     position: relative;
     z-index: 2;
     min-height: 100svh;
-    padding: 55px 14px 24px;
+    padding: 25px 14px 24px;
   }
+
 
   .initials {
     gap: 16px;
