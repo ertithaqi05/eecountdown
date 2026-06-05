@@ -236,7 +236,7 @@ h1 {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 26vw;
+    width: 18vw;
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
@@ -273,22 +273,19 @@ h1 {
   }
 
   .initials {
-    gap: 16px;
-    margin-bottom: 22px;
-    overflow: visible;
-  }
+  gap: 8px;
+  justify-content: center;
+}
 
-  .initials span {
-    font-size: 4.5rem;
-  }
+.initials span {
+  font-size: 4rem;
+}
 
-  .heart {
-    font-size: 5.2rem;
-    line-height: 1.15;
-    margin-top: 10px;
-    padding: 0 10px;
-    overflow: visible;
-  }
+.heart {
+  font-size: 4.5rem;
+  margin-top: 0;
+  transform: translateY(-4px);
+}
 
   .small-title {
     font-size: 0.7rem;
