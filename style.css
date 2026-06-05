@@ -236,10 +236,11 @@ h1 {
     position: fixed;
     top: 0;
     bottom: 0;
-    width: 18vw;
-    overflow: hidden;
+    width: 22vw;
+    overflow: visible;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.7;
   }
 
   .mobile-peonies.left {
