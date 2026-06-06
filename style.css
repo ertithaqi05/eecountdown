@@ -447,3 +447,19 @@ h1 {
 .back-btn {
   margin-top: 22px;
 }
+
+.delete-btn {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background: #e86c86;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(190, 70, 110, 0.2);
+}
+
+.delete-btn:hover {
+  opacity: 0.9;
+}

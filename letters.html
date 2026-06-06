@@ -24,18 +24,42 @@
     if (letters.length === 0) {
       lettersList.innerHTML = "<p class='empty-text'>No love letters saved yet.</p>";
     } else {
-      letters.reverse().forEach(letter => {
+      letters.reverse().forEach((letter, index) => {
         const card = document.createElement("div");
         card.className = "letter-card";
 
         card.innerHTML = `
-          <h3>From: ${letter.from}</h3>
-          <p>${letter.text}</p>
-          <small>${letter.date}</small>
+        <h3>From: ${letter.from}</h3>
+        <p>${letter.text}</p>
+        <small>${letter.date}</small>
+
+        <button class="delete-btn" data-index="${index}">
+        Delete Letter
+        </button>
+
         `;
 
         lettersList.appendChild(card);
       });
+
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const deleteIndex = btn.dataset.index;
+
+    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
+
+    if (confirm("Delete this love letter?")) {
+    letters.splice(letters.length - 1 - deleteIndex, 1);
+
+    localStorage.setItem("loveLetters", JSON.stringify(letters));
+
+    location.reload();
+}
+    localStorage.setItem("loveLetters", JSON.stringify(letters));
+
+    location.reload();
+    });
+}); 
     }
   </script>
 </body>
