@@ -18,52 +18,68 @@
   </main>
 
   <script>
-    const lettersList = document.getElementById("lettersList");
-    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
+  const SUPABASE_URL = "https://dyhuylpyjsevmsxfjqyb.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_kILXOA3VZ2x-woWhnHZx2Q_iI-0oDKV";
+
+  const lettersList = document.getElementById("lettersList");
+
+  async function loadLetters() {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/love_letters?select=*&order=created_at.desc`,
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    const letters = await response.json();
 
     if (letters.length === 0) {
       lettersList.innerHTML = "<p class='empty-text'>No love letters saved yet.</p>";
-    } else {
-      letters.reverse().forEach((letter, index) => {
-        const card = document.createElement("div");
-        card.className = "letter-card";
+      return;
+    }
 
-        card.innerHTML = `
-        <h3>From: ${letter.from}</h3>
-        <p>${letter.text.substring(0, 120)}...</p>
-        <small>${letter.date}</small>
+    letters.forEach(letter => {
+      const card = document.createElement("div");
+      card.className = "letter-card";
 
-        <a href="read.html?index=${letters.length - 1 - index}" class="love-btn">
-        Read Letter
+      card.innerHTML = `
+        <h3>From: ${letter.sender}</h3>
+        <p>${letter.message.substring(0, 120)}...</p>
+        <small>${new Date(letter.created_at).toLocaleString()}</small>
+
+        <a href="read.html?id=${letter.id}" class="love-btn">
+          Read Letter
         </a>
 
-        <button class="delete-btn" data-index="${index}">
-        Delete Letter
+        <button class="delete-btn" data-id="${letter.id}">
+          Delete Letter
         </button>
-        `;
+      `;
 
-        lettersList.appendChild(card);
-      });
+      lettersList.appendChild(card);
+    });
 
     document.querySelectorAll(".delete-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const deleteIndex = btn.dataset.index;
+      btn.addEventListener("click", async () => {
+        if (!confirm("Delete this love letter?")) return;
 
-    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
+        await fetch(`${SUPABASE_URL}/rest/v1/love_letters?id=eq.${btn.dataset.id}`, {
+          method: "DELETE",
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
+          }
+        });
 
-    if (confirm("Delete this love letter?")) {
-    letters.splice(letters.length - 1 - deleteIndex, 1);
-
-    localStorage.setItem("loveLetters", JSON.stringify(letters));
-
-    location.reload();
-}
-    localStorage.setItem("loveLetters", JSON.stringify(letters));
-
-    location.reload();
+        location.reload();
+      });
     });
-}); 
-    }
-  </script>
+  }
+
+  loadLetters();
+</script>
 </body>
 </html>

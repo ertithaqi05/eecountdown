@@ -1,3 +1,5 @@
+const SUPABASE_URL = "https://dyhuylpyjsevmsxfjqyb.supabase.co";
+const SUPABASE_KEY = "sb_publishable_kILXOA3VZ2x-woWhnHZx2Q_iI-0oDKV";
 const targetDate = new Date("2027-01-31T00:00:00").getTime();
 
 const daysEl = document.getElementById("days");
@@ -39,24 +41,32 @@ setInterval(updateCountdown, 1000);
 const saveLetterBtn = document.getElementById("saveLetterBtn");
 
 if (saveLetterBtn) {
-  saveLetterBtn.addEventListener("click", () => {
-    const from = document.getElementById("letterFrom").value.trim();
-    const text = document.getElementById("letterText").value.trim();
+  saveLetterBtn.addEventListener("click", async () => {
+    const sender = document.getElementById("letterFrom").value.trim();
+    const message = document.getElementById("letterText").value.trim();
 
-    if (!from || !text) {
+    if (!sender || !message) {
       alert("Please write your name and your letter first.");
       return;
     }
 
-    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
-
-    letters.push({
-      from,
-      text,
-      date: new Date().toLocaleString()
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/love_letters`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        sender: sender,
+        message: message
+      })
     });
 
-    localStorage.setItem("loveLetters", JSON.stringify(letters));
+    if (!response.ok) {
+      alert("Something went wrong saving the letter.");
+      return;
+    }
 
     window.location.href = "letters.html";
   });
