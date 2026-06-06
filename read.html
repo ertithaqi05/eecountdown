@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Read Love Letter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <img src="./images/peonies.png" class="peony-border" alt="">
+
+  <main class="letters-page">
+    <div id="singleLetter"></div>
+
+    <a href="letters.html" class="love-btn back-btn">
+      Back to Saved Letters
+    </a>
+  </main>
+
+  <script>
+    const singleLetter = document.getElementById("singleLetter");
+
+    const params = new URLSearchParams(window.location.search);
+    const index = Number(params.get("index"));
+
+    const letters =
+      JSON.parse(localStorage.getItem("loveLetters")) || [];
+
+    const letter = letters[index];
+
+    if (!letter) {
+      singleLetter.innerHTML =
+        "<p class='empty-text'>Letter not found.</p>";
+    } else {
+      singleLetter.innerHTML = `
+        <div class="single-letter-card">
+          <h1>From: ${letter.from}</h1>
+          <p>${letter.text}</p>
+          <small>${letter.date}</small>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

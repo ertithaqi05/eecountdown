@@ -29,15 +29,18 @@
         card.className = "letter-card";
 
         card.innerHTML = `
-        <h3>From: ${letter.from}</h3>
-        <p>${letter.text}</p>
-        <small>${letter.date}</small>
+  <h3>From: ${letter.from}</h3>
+  <p>${letter.text.substring(0, 120)}...</p>
+  <small>${letter.date}</small>
 
-        <button class="delete-btn" data-index="${index}">
-        Delete Letter
-        </button>
+  <a href="read.html?index=${letters.length - 1 - index}" class="read-btn">
+    Read Letter
+  </a>
 
-        `;
+  <button class="delete-btn" data-index="${index}">
+    Delete Letter
+  </button>
+`;
 
         lettersList.appendChild(card);
       });
