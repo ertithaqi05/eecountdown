@@ -271,8 +271,6 @@ h1 {
     z-index: 2;
     min-height: 100%;
     padding: 25px 14px 24px;
-    background: rgba(255, 240, 245, 0.55);
-    backdrop-filter: blur(2px);
     width: 100%;
   }
 
@@ -344,8 +342,8 @@ h1 {
 }
 
 .love-section {
-  margin-top: 70px;
-  padding: 30px 18px 80px;
+  margin-top: 0;
+  padding: 70px 18px 80px;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -466,15 +464,15 @@ h1 {
 }
 
 .page-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 100%;
-  background: rgba(255, 240, 245, 0.45);
-  backdrop-filter: blur(2px);
-  z-index: 1;
-  pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 240, 245, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 1;
+    pointer-events: none;
 }
 
 body {
