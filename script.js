@@ -35,3 +35,29 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+const saveLetterBtn = document.getElementById("saveLetterBtn");
+
+if (saveLetterBtn) {
+  saveLetterBtn.addEventListener("click", () => {
+    const from = document.getElementById("letterFrom").value.trim();
+    const text = document.getElementById("letterText").value.trim();
+
+    if (!from || !text) {
+      alert("Please write your name and your letter first.");
+      return;
+    }
+
+    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
+
+    letters.push({
+      from,
+      text,
+      date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("loveLetters", JSON.stringify(letters));
+
+    window.location.href = "letters.html";
+  });
+}

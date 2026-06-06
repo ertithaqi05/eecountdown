@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Letters - Saved</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <img src="./images/peonies.png" class="peony-border" alt="">
+
+  <main class="letters-page">
+    <h1>Love Letters - Saved</h1>
+
+    <div id="lettersList"></div>
+
+    <a href="index.html" class="love-btn back-btn">Back</a>
+  </main>
+
+  <script>
+    const lettersList = document.getElementById("lettersList");
+    const letters = JSON.parse(localStorage.getItem("loveLetters")) || [];
+
+    if (letters.length === 0) {
+      lettersList.innerHTML = "<p class='empty-text'>No love letters saved yet.</p>";
+    } else {
+      letters.reverse().forEach(letter => {
+        const card = document.createElement("div");
+        card.className = "letter-card";
+
+        card.innerHTML = `
+          <h3>From: ${letter.from}</h3>
+          <p>${letter.text}</p>
+          <small>${letter.date}</small>
+        `;
+
+        lettersList.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
