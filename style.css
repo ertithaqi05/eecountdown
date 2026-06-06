@@ -464,3 +464,26 @@ h1 {
 .delete-btn:hover {
   opacity: 0.9;
 }
+
+.page-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: rgba(255, 240, 245, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+body {
+  position: relative;
+}
+
+.container,
+.love-section,
+.letters-page {
+  position: relative;
+  z-index: 2;
+}
