@@ -189,7 +189,7 @@ function getTodayDateKey() {
 
 function getDailyQuestion() {
   const today = new Date();
-  const start = new Date("2026-01-01");
+  const start = new Date("2025-01-01");
   const dayNumber = Math.floor((today - start) / (1000 * 60 * 60 * 24));
   return dailyQuestions[dayNumber % dailyQuestions.length];
 }
