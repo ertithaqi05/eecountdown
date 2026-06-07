@@ -1,5 +1,13 @@
 const SUPABASE_URL = "https://dyhuylpyjsevmsxfjqyb.supabase.co";
 const SUPABASE_KEY = "sb_publishable_kILXOA3VZ2x-woWhnHZx2Q_iI-0oDKV";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const q = document.getElementById("dailyQuestion");
+
+  if (q) {
+    q.textContent = "JS IS WORKING";
+  }
+});
 const targetDate = new Date("2027-01-31T00:00:00").getTime();
 
 const daysEl = document.getElementById("days");
