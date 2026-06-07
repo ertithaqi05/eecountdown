@@ -96,3 +96,33 @@ if (pickDateBtn) {
     dateIdea.textContent = randomIdea;
   });
 }
+
+const reasons = [
+  "I love your smile",
+  "I love how you make me laugh",
+  "I love how you make me feel seen",
+  "I love talking to you for hours",
+  "I love your eyes... a lot",
+  "I love how excited you get about me",
+  "I love how safe I feel with you",
+  "I love when you say my name",
+  "I love how you always support me",
+  "I love making memories with you",
+  "I love your voice",
+  "I love the way you look at me",
+  "I love how perfect you are",
+  "I love being able to be myself around you",
+  "I love everything about you"
+];
+
+const reasonBtn = document.getElementById("reasonBtn");
+const loveReason = document.getElementById("loveReason");
+
+if (reasonBtn) {
+  reasonBtn.addEventListener("click", () => {
+    const randomReason =
+      reasons[Math.floor(Math.random() * reasons.length)];
+
+    loveReason.textContent = randomReason;
+  });
+}
