@@ -78,7 +78,7 @@ const dateIdeas = [
   "Late night walk 🌙",
   "Coffee date ☕",
   "Ice cream date 🍦",
-  "Cooking dinner together 🍝",
+  "Pasta???? (i already know its this one) 🍝",
   "Mini golf date ⛳",
   "Matching pyjama movie night 🧸",
   "Sunset walk 🌅",
