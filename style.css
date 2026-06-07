@@ -485,3 +485,29 @@ body {
   position: relative;
   z-index: 2;
 }
+
+.date-section {
+  padding: 60px 18px 80px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.date-section h2 {
+  font-family: 'Playfair Display', serif;
+  color: #c94f78;
+  font-size: 2.3rem;
+  margin-bottom: 20px;
+}
+
+.date-idea {
+  max-width: 520px;
+  margin: 0 auto 22px;
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(255, 245, 250, 0.85);
+  color: #c94f78;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  box-shadow: 0 14px 30px rgba(190, 70, 110, 0.12);
+}

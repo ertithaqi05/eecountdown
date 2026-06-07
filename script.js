@@ -71,3 +71,28 @@ if (saveLetterBtn) {
     window.location.href = "letters.html";
   });
 }
+
+const dateIdeas = [
+  "Movie 🍿",
+  "Picnic in the park 🧺",
+  "Late night walk 🌙",
+  "Coffee date ☕",
+  "Ice cream date 🍦",
+  "Cooking dinner together 🍝",
+  "Mini golf date ⛳",
+  "Matching pyjama movie night 🧸",
+  "Sunset walk 🌅",
+  "Build a Lego set together 🧱",
+  "Board game night 🎲",
+  "Cake date 🍰"
+];
+
+const pickDateBtn = document.getElementById("pickDateBtn");
+const dateIdea = document.getElementById("dateIdea");
+
+if (pickDateBtn) {
+  pickDateBtn.addEventListener("click", () => {
+    const randomIdea = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+    dateIdea.textContent = randomIdea;
+  });
+}
