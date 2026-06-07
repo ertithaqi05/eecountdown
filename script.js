@@ -72,23 +72,9 @@ if (saveLetterBtn) {
   });
 }
 
-const dateIdeas = [
-  "Movie 🍿",
-  "Picnic in the park 🧺",
-  "Late night walk 🌙",
-  "Coffee date ☕",
-  "Ice cream date 🍦",
-  "Pasta???? (i already know its this one) 🍝",
-  "Mini golf date ⛳",
-  "Arcade date 🧸",
-  "Sunset walk 🌅",
-  "Build a Lego set together 🧱",
-  "Board game night 🎲",
-  "Cake date 🍰"
-];
-
 const pickDateBtn = document.getElementById("pickDateBtn");
 const dateIdea = document.getElementById("dateIdea");
+const dateSelect = document.getElementById("dateSelect");
 
 async function loadPickedDate() {
   if (!dateIdea) return;
@@ -104,11 +90,15 @@ async function loadPickedDate() {
 
   if (data.length > 0) {
     dateIdea.textContent = data[0].idea;
+
+    if (dateSelect) {
+      dateSelect.value = data[0].idea;
+    }
   }
 }
 
 async function savePickedDate(idea) {
-  await fetch(`${SUPABASE_URL}/rest/v1/date_pick`, {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/date_pick`, {
     method: "POST",
     headers: {
       "apikey": SUPABASE_KEY,
@@ -122,17 +112,25 @@ async function savePickedDate(idea) {
       updated_at: new Date().toISOString()
     })
   });
+
+  if (!response.ok) {
+    alert("Something went wrong saving the date idea.");
+  }
 }
 
 if (pickDateBtn) {
   loadPickedDate();
 
   pickDateBtn.addEventListener("click", async () => {
-    const randomIdea =
-      dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+    const selectedIdea = dateSelect.value;
 
-    dateIdea.textContent = randomIdea;
-    await savePickedDate(randomIdea);
+    if (!selectedIdea) {
+      alert("Please choose a date idea first.");
+      return;
+    }
+
+    dateIdea.textContent = selectedIdea;
+    await savePickedDate(selectedIdea);
   });
 }
 

@@ -511,6 +511,20 @@ body {
   line-height: 1.5;
   box-shadow: 0 14px 30px rgba(190, 70, 110, 0.12);
 }
+.date-select {
+  width: 100%;
+  max-width: 520px;
+  display: block;
+  margin: 0 auto 16px;
+  padding: 15px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(220, 100, 140, 0.25);
+  background: rgba(255, 245, 250, 0.9);
+  color: #c94f78;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 12px 28px rgba(190, 70, 110, 0.12);
+}
 
 .reasons-section {
   padding: 60px 18px 80px;
