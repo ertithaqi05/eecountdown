@@ -1,13 +1,6 @@
 const SUPABASE_URL = "https://dyhuylpyjsevmsxfjqyb.supabase.co";
 const SUPABASE_KEY = "sb_publishable_kILXOA3VZ2x-woWhnHZx2Q_iI-0oDKV";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const q = document.getElementById("dailyQuestion");
-
-  if (q) {
-    q.textContent = "JS IS WORKING";
-  }
-});
 const targetDate = new Date("2027-01-31T00:00:00").getTime();
 
 const daysEl = document.getElementById("days");
@@ -198,8 +191,16 @@ function getTodayDateKey() {
 function getDailyQuestion() {
   const today = new Date();
   const start = new Date("2025-01-01");
-  const dayNumber = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-  return dailyQuestions[dayNumber % dailyQuestions.length];
+
+  const dayNumber = Math.floor(
+    (today - start) / (1000 * 60 * 60 * 24)
+  );
+
+  const index =
+    ((dayNumber % dailyQuestions.length) + dailyQuestions.length) %
+    dailyQuestions.length;
+
+  return dailyQuestions[index];
 }
 
 function normaliseAnswer(text) {
