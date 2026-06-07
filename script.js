@@ -80,7 +80,7 @@ const dateIdeas = [
   "Ice cream date 🍦",
   "Pasta???? (i already know its this one) 🍝",
   "Mini golf date ⛳",
-  "Matching pyjama movie night 🧸",
+  "Arcade date 🧸",
   "Sunset walk 🌅",
   "Build a Lego set together 🧱",
   "Board game night 🎲",
