@@ -90,10 +90,49 @@ const dateIdeas = [
 const pickDateBtn = document.getElementById("pickDateBtn");
 const dateIdea = document.getElementById("dateIdea");
 
+async function loadPickedDate() {
+  if (!dateIdea) return;
+
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/date_pick?id=eq.1&select=*`, {
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`
+    }
+  });
+
+  const data = await response.json();
+
+  if (data.length > 0) {
+    dateIdea.textContent = data[0].idea;
+  }
+}
+
+async function savePickedDate(idea) {
+  await fetch(`${SUPABASE_URL}/rest/v1/date_pick`, {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Content-Type": "application/json",
+      "Prefer": "resolution=merge-duplicates"
+    },
+    body: JSON.stringify({
+      id: 1,
+      idea: idea,
+      updated_at: new Date().toISOString()
+    })
+  });
+}
+
 if (pickDateBtn) {
-  pickDateBtn.addEventListener("click", () => {
-    const randomIdea = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+  loadPickedDate();
+
+  pickDateBtn.addEventListener("click", async () => {
+    const randomIdea =
+      dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+
     dateIdea.textContent = randomIdea;
+    await savePickedDate(randomIdea);
   });
 }
 
