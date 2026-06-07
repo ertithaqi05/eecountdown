@@ -163,3 +163,141 @@ if (reasonBtn) {
     loveReason.textContent = randomReason;
   });
 }
+
+const dailyQuestions = [
+  "What is your favourite memory of us?",
+  "What is one place you want us to go together?",
+  "What is something that made you smile today?",
+  "What food should we get together next?",
+  "What song reminds you of us?",
+  "What is one thing you love about me?",
+  "What is your perfect date with me?",
+  "What is something you are looking forward to with us?",
+  "What is one thing you want to do together this year?",
+  "What is your favourite thing about our relationship?"
+];
+
+const dailyQuestionEl = document.getElementById("dailyQuestion");
+const dailyNameEl = document.getElementById("dailyName");
+const dailyAnswerEl = document.getElementById("dailyAnswer");
+const submitDailyBtn = document.getElementById("submitDailyBtn");
+const dailyResults = document.getElementById("dailyResults");
+
+function getTodayDateKey() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function getDailyQuestion() {
+  const today = new Date();
+  const start = new Date("2026-01-01");
+  const dayNumber = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+  return dailyQuestions[dayNumber % dailyQuestions.length];
+}
+
+function normaliseAnswer(text) {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+async function loadDailyAnswers(showResults = false) {
+  if (!dailyResults) return;
+
+  const todayKey = getTodayDateKey();
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/daily_answers?answer_date=eq.${todayKey}&select=*&order=created_at.asc`,
+    {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    }
+  );
+
+  const answers = await response.json();
+
+  if (!showResults) {
+    dailyResults.classList.add("hidden");
+    return;
+  }
+
+  if (answers.length === 0) {
+    dailyResults.innerHTML = "<p>No answers yet.</p>";
+    dailyResults.classList.remove("hidden");
+    return;
+  }
+
+  let matchText = "";
+
+  if (answers.length >= 2) {
+    const normalisedAnswers = answers.map(item => normaliseAnswer(item.answer));
+    const hasMatch = normalisedAnswers.some((answer, index) =>
+      normalisedAnswers.indexOf(answer) !== index
+    );
+
+    matchText = hasMatch
+      ? "<p class='match-text'>You matched! ❤️ You both said the same thing.</p>"
+      : "<p class='match-text'>No exact match today, but both answers are cute ❤️</p>";
+  }
+
+  dailyResults.innerHTML = `
+    <h3>Today’s Answers</h3>
+    ${matchText}
+    ${answers
+      .map(
+        item => `
+          <div class="daily-answer-card">
+            <strong>From: ${item.sender}</strong>
+            <p>${item.answer}</p>
+          </div>
+        `
+      )
+      .join("")}
+  `;
+
+  dailyResults.classList.remove("hidden");
+}
+
+if (dailyQuestionEl) {
+  dailyQuestionEl.textContent = getDailyQuestion();
+}
+
+if (submitDailyBtn) {
+  submitDailyBtn.addEventListener("click", async () => {
+    const sender = dailyNameEl.value.trim();
+    const answer = dailyAnswerEl.value.trim();
+    const todayKey = getTodayDateKey();
+
+    if (!sender || !answer) {
+      alert("Please write your name and answer first.");
+      return;
+    }
+
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/daily_answers`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        answer_date: todayKey,
+        sender: sender,
+        answer: answer
+      })
+    });
+
+    if (!response.ok) {
+      alert("Something went wrong saving your answer.");
+      return;
+    }
+
+    dailyNameEl.value = "";
+    dailyAnswerEl.value = "";
+
+    await loadDailyAnswers(true);
+  });
+}
