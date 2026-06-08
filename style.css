@@ -653,3 +653,56 @@ body {
 .hidden {
   display: none;
 }
+
+.menu-btn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 100;
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  background: rgba(255, 245, 250, 0.9);
+  color: #c94f78;
+  font-size: 1.6rem;
+  box-shadow: 0 10px 24px rgba(190, 70, 110, 0.18);
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 250px;
+  height: 100vh;
+  background: rgba(255, 245, 250, 0.96);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  padding: 70px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: right 0.3s ease;
+  box-shadow: -10px 0 30px rgba(190, 70, 110, 0.18);
+}
+
+.side-menu.open {
+  right: 0;
+}
+
+.side-menu a {
+  color: #c94f78;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.close-menu {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  border: none;
+  background: none;
+  color: #c94f78;
+  font-size: 2rem;
+}

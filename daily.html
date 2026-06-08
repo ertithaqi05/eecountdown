@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Question</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page-overlay"></div>
+
+  <img src="./images/peonies.png" class="peony-border" alt="">
+
+  <button class="menu-btn" id="menuBtn">☰</button>
+
+  <nav class="side-menu" id="sideMenu">
+    <button class="close-menu" id="closeMenu">×</button>
+
+    <a href="index.html">Home</a>
+    <a href="write-letter.html">Write Love Letter</a>
+    <a href="letters.html">Saved Love Letters</a>
+    <a href="daily.html">Daily Question</a>
+  </nav>
+
+  <main class="letters-page">
+
+    <section class="daily-section">
+
+      <h2>Daily Question</h2>
+
+      <div class="daily-card">
+
+        <p id="dailyQuestion" class="daily-question"></p>
+
+        <input
+          id="dailyName"
+          class="from-input"
+          type="text"
+          placeholder="From:"
+        >
+
+        <textarea
+          id="dailyAnswer"
+          class="letter-box daily-answer-box"
+          placeholder="Write your answer..."
+        ></textarea>
+
+        <button id="submitDailyBtn" class="love-btn">
+          Submit Answer
+        </button>
+
+        <div id="dailyResults" class="daily-results hidden"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
