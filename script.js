@@ -211,7 +211,7 @@ function normaliseAnswer(text) {
     .replace(/\s+/g, " ");
 }
 
-async function loadDailyAnswers(showResults = false) {
+async function loadDailyAnswers() {
   if (!dailyResults) return;
 
   const todayKey = getTodayDateKey();
@@ -228,28 +228,30 @@ async function loadDailyAnswers(showResults = false) {
 
   const answers = await response.json();
 
-  if (!showResults) {
-    dailyResults.classList.add("hidden");
-    return;
-  }
-
-  if (answers.length === 0) {
-    dailyResults.innerHTML = "<p>No answers yet.</p>";
+  if (answers.length >= 2) {
+    showDailyResults(answers);
+    hideDailyForm();
+  } else {
+    dailyResults.innerHTML = `
+      <p class="match-text">
+        ${answers.length}/2 answers submitted. Answers unlock when both people have answered ❤️
+      </p>
+    `;
     dailyResults.classList.remove("hidden");
-    return;
   }
+}
 
+function showDailyResults(answers) {
   let matchText = "";
 
   if (answers.length >= 2) {
-    const normalisedAnswers = answers.map(item => normaliseAnswer(item.answer));
-    const hasMatch = normalisedAnswers.some((answer, index) =>
-      normalisedAnswers.indexOf(answer) !== index
-    );
+    const answerOne = normaliseAnswer(answers[0].answer);
+    const answerTwo = normaliseAnswer(answers[1].answer);
 
-    matchText = hasMatch
-      ? "<p class='match-text'>You matched! ❤️ You both said the same thing.</p>"
-      : "<p class='match-text'>No exact match today, but both answers are cute ❤️</p>";
+    matchText =
+      answerOne === answerTwo
+        ? "<p class='match-text'>You matched! ❤️ You both said the same thing.</p>"
+        : "<p class='match-text'>No exact match today, but both answers are cute ❤️</p>";
   }
 
   dailyResults.innerHTML = `
@@ -270,8 +272,15 @@ async function loadDailyAnswers(showResults = false) {
   dailyResults.classList.remove("hidden");
 }
 
+function hideDailyForm() {
+  if (dailyNameEl) dailyNameEl.style.display = "none";
+  if (dailyAnswerEl) dailyAnswerEl.style.display = "none";
+  if (submitDailyBtn) submitDailyBtn.style.display = "none";
+}
+
 if (dailyQuestionEl) {
   dailyQuestionEl.textContent = getDailyQuestion();
+  loadDailyAnswers();
 }
 
 if (submitDailyBtn) {
@@ -282,6 +291,25 @@ if (submitDailyBtn) {
 
     if (!sender || !answer) {
       alert("Please write your name and answer first.");
+      return;
+    }
+
+    const checkResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/daily_answers?answer_date=eq.${todayKey}&select=*`,
+      {
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    const existingAnswers = await checkResponse.json();
+
+    if (existingAnswers.length >= 2) {
+      alert("Both answers have already been submitted for today.");
+      showDailyResults(existingAnswers);
+      hideDailyForm();
       return;
     }
 
@@ -307,7 +335,7 @@ if (submitDailyBtn) {
     dailyNameEl.value = "";
     dailyAnswerEl.value = "";
 
-    await loadDailyAnswers(true);
+    await loadDailyAnswers();
   });
 }
 
