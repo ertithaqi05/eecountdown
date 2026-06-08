@@ -280,7 +280,9 @@ function hideDailyForm() {
 
 if (dailyQuestionEl) {
   dailyQuestionEl.textContent = getDailyQuestion();
-  loadDailyAnswers();
+  loadDailyAnswers().catch(error => {
+  console.error("Daily answers error:", error);
+});
 }
 
 if (submitDailyBtn) {
