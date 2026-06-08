@@ -310,3 +310,19 @@ if (submitDailyBtn) {
     await loadDailyAnswers(true);
   });
 }
+
+const menuBtn = document.getElementById("menuBtn");
+const closeMenu = document.getElementById("closeMenu");
+const sideMenu = document.getElementById("sideMenu");
+
+if (menuBtn && sideMenu) {
+  menuBtn.addEventListener("click", () => {
+    sideMenu.classList.add("open");
+  });
+}
+
+if (closeMenu && sideMenu) {
+  closeMenu.addEventListener("click", () => {
+    sideMenu.classList.remove("open");
+  });
+}
