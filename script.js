@@ -36,8 +36,10 @@ function updateCountdown() {
   secondsEl.textContent = String(seconds).padStart(2, "0");
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+if (daysEl && hoursEl && minutesEl && secondsEl) {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
 
 const saveLetterBtn = document.getElementById("saveLetterBtn");
 
